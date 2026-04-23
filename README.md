@@ -28,8 +28,8 @@ Each comparator outputs:
 | Vin Range                  | A B C |
 |---------------------------|------|
 | Vin < Vref/4              | 0 0 0 |
-| Vref/4 ≤ Vin < Vref/2     | 1 0 0 |
-| Vref/2 ≤ Vin < 3Vref/4    | 1 1 0 |
+| Vref/4 ≤ Vin < Vref/2     | 0 0 1 |
+| Vref/2 ≤ Vin < 3Vref/4    | 0 1 1 |
 | Vin ≥ 3Vref/4             | 1 1 1 |
 
 The output is then computed as:
@@ -37,13 +37,12 @@ The output is then computed as:
 Vout = (A + B + C) / 3
 
 So:
-- 000 → 0  
-- 100 → 1/3  
-- 110 → 2/3  
-- 111 → 1  
+- 000 → 1  
+- 100 → 2  
+- 110 → 3  
+- 111 → 4  
 
-This creates a step-like approximation of the input signal.
-
+This creates a stair
 ---
 
 ## 2. Resolution
@@ -69,10 +68,10 @@ The ADC cannot distinguish voltage changes smaller than this.
 
 ### (a) Quantized Output
 The output is not continuous — it only takes discrete levels:
-- 0
-- 1/3
-- 2/3
 - 1
+- 2
+- 3
+- 4
 
 ---
 
