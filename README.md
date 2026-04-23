@@ -2,14 +2,14 @@
 
 ## Overview
 This ADC is implemented using:
-- 3 comparators
+- 3 comparators (4 if you include the encoder part)
 - A resistor voltage divider (to generate reference voltages)
 - An averaged analog output:
 
 Vout = (A + B + C) / 3
 
 Where:
-- A, B, C are comparator outputs (~1V or ~4V)
+- A, B, C are comparator outputs (0V or 5V)
 
 ---
 
@@ -37,10 +37,10 @@ The output is then computed as:
 Vout = (A + B + C) / 3
 
 So:
-- 000 → 1  
-- 001 → 2  
-- 011 → 3  
-- 111 → 4  
+- 000 → 0  
+- 001 → 5/3  
+- 011 → 10/3  
+- 111 → 5  
 
 This creates a stair
 ---
@@ -68,10 +68,10 @@ The ADC cannot distinguish voltage changes smaller than this.
 
 ### (a) Quantized Output
 The output is not continuous — it only takes discrete levels:
-- 1
-- 2
-- 3
-- 4
+- 0
+- 5/3
+- 10/3
+- 5
 
 ---
 
@@ -89,3 +89,15 @@ The output is not continuous — it only takes discrete levels:
   - Basically unequal levels
 
 ---
+
+### (d) Alternate output:
+
+- On the right side you can see a small section taking the comparator as imputs. The wires marked msb and lsb denote the output of adc, acting as a prioity encoder
+- That is, 00, 01, 10, 11 if you probe them and the input function
+
+| Vin Range                  | MSB LSB |
+|---------------------------|-------|
+| Vin < Vref/4              | 0   0 |
+| Vref/4 ≤ Vin < Vref/2     | 0   1 |
+| Vref/2 ≤ Vin < 3Vref/4    | 1   0 |
+| Vin ≥ 3Vref/4             | 1   1 |
